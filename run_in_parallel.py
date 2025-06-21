@@ -18,13 +18,19 @@ def run_script(input_file):
             ["python", SCRIPT_NAME, input_path],
             capture_output=True,
             text=True,
-            check=True
+            check=True,
+            timeout=1800  # 30 minutes
         )
         with open(output_path, 'w') as f:
             f.write(result.stdout)
         return f"{input_file} ✔"
+    
+    except subprocess.TimeoutExpired:
+        return f"{input_file} ⏰ Timeout after 30 minutes"
+    
     except subprocess.CalledProcessError as e:
         return f"{input_file} ✖ Error: {e.stderr}"
+
 
 def main():
     input_files = [f for f in os.listdir(INPUT_DIR) if os.path.isfile(os.path.join(INPUT_DIR, f))]
