@@ -10,12 +10,11 @@ NUM_CORES = 50
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def run_script(input_file):
-    input_path = os.path.join(INPUT_DIR, input_file)
     output_path = os.path.join(OUTPUT_DIR, f"{os.path.splitext(input_file)[0]}.out")
     
     try:
         result = subprocess.run(
-            ["python", SCRIPT_NAME, input_path],
+            ["python", SCRIPT_NAME, input_file],
             capture_output=True,
             text=True,
             check=True,
